@@ -1,0 +1,110 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.larskroll</groupId>
+    <artifactId>common-utils</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <name>CommonUtils</name>
+    <!--<url>http://maven.apache.org</url>//-->
+
+    <properties>
+        <java.compiler.version>1.6</java.compiler.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+  
+    <licenses>
+        <license>
+            <name>GNU General Public License Version 2</name>
+            <url>http://www.gnu.org/licenses/gpl-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.5</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>18.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.javatuples</groupId>
+            <artifactId>javatuples</artifactId>
+            <version>1.2</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
+    
+    <build>
+        <extensions>
+            <extension>
+                <groupId>org.apache.maven.wagon</groupId>
+                <artifactId>wagon-ssh-external</artifactId>
+                <version>1.0-beta-6</version>
+            </extension>
+        </extensions>
+    </build>
+    
+    <repositories>
+        <repository>
+            <id>sics-release</id>
+            <name>SICS Release Repository</name>
+            <url>http://kompics.sics.se/maven/repository</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>sics-snapshot</id>
+            <name>SICS Snapshot Repository</name>
+            <url>http://kompics.sics.se/maven/snapshotrepository</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+    
+    <distributionManagement>
+        <repository>
+            <id>sics-release-repository</id>
+            <name>SICS Repository</name>
+            <url>scpexe://kompics.i.sics.se/home/maven/repository</url>
+        </repository>
+        <snapshotRepository>
+            <id>sics-snapshot-repository</id>
+            <name>SICS Snapshot Repository</name>
+            <url>scpexe://kompics.i.sics.se/home/maven/snapshotrepository</url>
+        </snapshotRepository>
+        <downloadUrl>http://kompics.sics.se/maven/repository</downloadUrl>
+    </distributionManagement>
+    
+    <developers>
+        <developer>
+            <id>lkroll</id>
+            <name>Lars Kroll</name>
+            <email>lkr&gt;lars-kroll.com</email>
+            <url>http://www.lars-kroll.com</url>
+            <organization>Royal Institute of Technology (KTH)</organization>
+            <organizationUrl>http://www.kth.se/ict/</organizationUrl>
+            <roles>
+                <role>architect</role>
+                <role>developer</role>
+            </roles>
+            <timezone>+1</timezone>
+        </developer>
+    </developers>
+</project>
