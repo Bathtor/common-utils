@@ -133,7 +133,7 @@ public abstract class ByteArrayFormatter {
             }
         }
     }
-
+    
     public static String printFormat(byte[] id) {
         StringBuilder sb = new StringBuilder();
         printFormat(id, sb);

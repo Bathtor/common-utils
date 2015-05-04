@@ -36,7 +36,8 @@ object CsiBuild extends Build {
       libraryDependencies += "io.spray" %% "spray-can" % sprayV % "provided",
       libraryDependencies += "io.spray" %% "spray-routing" % sprayV % "provided",
       libraryDependencies += "com.typesafe.akka" %% "akka-actor" % akkaV % "provided",
-      libraryDependencies += "org.javatuples" % "javatuples" % "1.2" % "provided"
+      libraryDependencies += "org.javatuples" % "javatuples" % "1.2" % "provided",
+      libraryDependencies += "com.google.guava" % "guava" % "18.0" % "provided"
     )
   )
 }

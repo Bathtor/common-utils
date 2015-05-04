@@ -20,6 +20,9 @@
  */
 package com.larskroll.common;
 
+import io.netty.buffer.ByteBuf;
+import java.util.Iterator;
+
 /**
  *
  * @author lkroll
@@ -29,6 +32,14 @@ public class ByteArrayRef implements Comparable<ByteArrayRef>, DataRef {
     public final int begin;
     public final int length;
     private final byte[] backingArray;
+
+    public void copyTo(ByteBuf buffer) {
+        buffer.writeBytes(backingArray, begin, length);
+    }
+
+    public Iterable<DataRef> split(long numberOfChunks, int chunkSize) {
+        return new BARIterator(chunkSize);
+    }
     
     public static ByteArrayRef wrap(byte[] backingArray) {
         return new ByteArrayRef(0, backingArray.length, backingArray);
@@ -251,5 +262,31 @@ public class ByteArrayRef implements Comparable<ByteArrayRef>, DataRef {
             }
         }
         return true;
+    }
+    
+    public class BARIterator implements Iterator<DataRef>, Iterable<DataRef> {
+
+        public int pos = begin;
+        private final int chunkSize;
+        
+        private BARIterator(int chunkSize) {
+            this.chunkSize = chunkSize;
+        }
+        
+        public boolean hasNext() {
+            return length > pos;
+        }
+
+        public DataRef next() {
+            int chunkLength = Math.min(chunkSize, length-pos);
+            ByteArrayRef subarea = new ByteArrayRef(pos, chunkLength, backingArray);
+            pos += chunkLength;
+            return subarea;
+        }
+
+        public Iterator<DataRef> iterator() {
+            return this;
+        }
+        
     }
 }

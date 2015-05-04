@@ -5,6 +5,8 @@
  */
 package com.larskroll.common;
 
+import io.netty.buffer.ByteBuf;
+
 /**
  * This things is getting damn ObjC-y with all the memory management.
  * But some things Java just can't be trusted to do by itself^^
@@ -91,4 +93,26 @@ public interface DataRef {
      * @param offset
      */
     public void copyTo(byte[] target, int offset);
+    
+    /**
+     * Move the whole content into the provided ByteBuf
+     * 
+     * @param buffer 
+     */
+    public void copyTo(ByteBuf buffer);
+    
+    /**
+     * Returns an Iterable over DataRefs pointing to numberOfChunks subareas of this DataRef such that each subarea is no larger than chunkSize
+     * 
+     * Don't COPY if possible...
+     * Also notice that all subareas should be exactly chunk_size except the last
+     * 
+     * And Don't forget: https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html#size--
+     * Java is weird
+     * 
+     * @param numberOfChunks
+     * @param chunkSize
+     * @return 
+     */
+    public Iterable<DataRef> split(long numberOfChunks, int chunkSize);
 }
