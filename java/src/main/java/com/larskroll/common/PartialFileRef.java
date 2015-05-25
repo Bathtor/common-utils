@@ -24,6 +24,10 @@ public class PartialFileRef implements DataRef {
         this.length = length;
         data.retain();
     }
+    
+    public RAFileRef fileRef() {
+        return data;
+    }
 
     public void retain() {
         data.retain();

@@ -203,6 +203,10 @@ public class RAFileRef implements DataRef {
             throw new IllegalStateException("Object was already deallocated: " + raf);
         }
     }
+    
+    public long rc() { // for debugging only!
+        return rc;
+    }
 
     public void copyTo(io.netty.buffer.ByteBuf buffer) {
         long length = size();
