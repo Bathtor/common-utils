@@ -20,13 +20,14 @@
  */
 package com.larskroll.common;
 
-import com.larskroll.common.TopKMap;
 import com.google.common.collect.Ordering;
 import java.util.Comparator;
 
 /**
  *
  * @author lkroll
+ * @param <K>
+ * @param <V>
  */
 public class ExtremeKMap<K extends Comparable, V> {
 

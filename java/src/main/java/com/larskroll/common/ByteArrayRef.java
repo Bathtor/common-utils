@@ -33,10 +33,12 @@ public class ByteArrayRef implements Comparable<ByteArrayRef>, DataRef {
     public final int length;
     private final byte[] backingArray;
 
+    @Override
     public void copyTo(ByteBuf buffer) {
         buffer.writeBytes(backingArray, begin, length);
     }
 
+    @Override
     public Iterable<DataRef> split(long numberOfChunks, int chunkSize) {
         return new BARIterator(chunkSize);
     }
@@ -65,6 +67,7 @@ public class ByteArrayRef implements Comparable<ByteArrayRef>, DataRef {
      *
      * @return
      */
+    @Override
     public byte[] dereference() {
         if (length == 0) {
             return null;
@@ -72,6 +75,7 @@ public class ByteArrayRef implements Comparable<ByteArrayRef>, DataRef {
         return dereference(0, length);
     }
     
+    @Override
     public byte dereference(long i) {
         if (i > Integer.MAX_VALUE) {
             throw new IndexOutOfBoundsException("Bounds don't fit into an integer: " + i);
@@ -83,6 +87,7 @@ public class ByteArrayRef implements Comparable<ByteArrayRef>, DataRef {
         return backingArray[begin + ii];
     }
     
+    @Override
     public void assign(long i, byte val) {
         if (i > Integer.MAX_VALUE) {
             throw new IndexOutOfBoundsException("Bounds don't fit into an integer: " + i);
@@ -137,6 +142,7 @@ public class ByteArrayRef implements Comparable<ByteArrayRef>, DataRef {
      * @param target
      * @param offset
      */
+    @Override
     public void copyTo(byte[] target, int offset) {
         if (backingArray == null) {
             return; // ignore
@@ -198,6 +204,7 @@ public class ByteArrayRef implements Comparable<ByteArrayRef>, DataRef {
         return hash;
     }
     
+    @Override
     public byte[] dereference(long start, long end) {
         if (start > Integer.MAX_VALUE || end > Integer.MAX_VALUE) {
             throw new IndexOutOfBoundsException("Bounds don't fit into an integer: " + start + ", " + end);
@@ -216,6 +223,7 @@ public class ByteArrayRef implements Comparable<ByteArrayRef>, DataRef {
         return data;
     }
     
+    @Override
     public void assign(long start, byte[] newData) {
         long end = start + newData.length;
         if (start > Integer.MAX_VALUE || end > Integer.MAX_VALUE) {
@@ -232,22 +240,27 @@ public class ByteArrayRef implements Comparable<ByteArrayRef>, DataRef {
         System.arraycopy(newData, 0, backingArray, (int)start, newData.length);
     }
     
+    @Override
     public void assign(long start, DataRef newData) {
         assign(start, newData.dereference());
     }
     
+    @Override
     public void copyTo(DataRef target, long offset) {
         target.assign(offset, backingArray);
     }
 
+    @Override
     public long size() {
         return length;
     }
 
+    @Override
     public void retain() {
         // Simply ignore...GC will do this for us
     }
 
+    @Override
     public void release() {
         // Simply ignore...GC will do this for us
     }
@@ -273,10 +286,12 @@ public class ByteArrayRef implements Comparable<ByteArrayRef>, DataRef {
             this.chunkSize = chunkSize;
         }
         
+        @Override
         public boolean hasNext() {
             return length > pos;
         }
 
+        @Override
         public DataRef next() {
             int chunkLength = Math.min(chunkSize, length-pos);
             ByteArrayRef subarea = new ByteArrayRef(pos, chunkLength, backingArray);
@@ -284,9 +299,14 @@ public class ByteArrayRef implements Comparable<ByteArrayRef>, DataRef {
             return subarea;
         }
 
+        @Override
         public Iterator<DataRef> iterator() {
             return this;
         }
         
+        @Override
+        public void remove() {
+            throw new UnsupportedOperationException("Not yet implemented!");
+        }
     }
 }

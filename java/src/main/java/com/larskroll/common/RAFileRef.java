@@ -40,6 +40,7 @@ public class RAFileRef implements DataRef {
         //f.deleteOnExit(); // in case the VM quits 
     }
 
+    @Override
     public byte[] dereference() {
         try {
             byte[] data = new byte[(int) raf.length()];
@@ -51,6 +52,7 @@ public class RAFileRef implements DataRef {
         }
     }
 
+    @Override
     public byte dereference(long i) {
         try {
             if (i >= raf.length()) {
@@ -63,6 +65,7 @@ public class RAFileRef implements DataRef {
         }
     }
 
+    @Override
     public byte[] dereference(long start, long end) {
         try {
             if ((start >= raf.length()) || (start < 0)) {
@@ -85,6 +88,7 @@ public class RAFileRef implements DataRef {
         }
     }
 
+    @Override
     public void assign(long i, byte val) {
         try {
             if (i >= raf.length()) {
@@ -97,6 +101,7 @@ public class RAFileRef implements DataRef {
         }
     }
 
+    @Override
     public void assign(long start, byte[] newData) {
         try {
             if ((start >= raf.length()) || (start < 0)) {
@@ -113,6 +118,7 @@ public class RAFileRef implements DataRef {
         }
     }
 
+    @Override
     public void assign(long start, DataRef newData) {
         if (newData instanceof RAFileRef) {
             try {
@@ -130,6 +136,7 @@ public class RAFileRef implements DataRef {
         }
     }
 
+    @Override
     public void copyTo(DataRef target, long offset) {
 
     }
@@ -166,6 +173,7 @@ public class RAFileRef implements DataRef {
         }
     }
 
+    @Override
     public void copyTo(byte[] target, int offset) {
 
         long length = size();
@@ -175,6 +183,7 @@ public class RAFileRef implements DataRef {
         copyTo(target, offset, 0, (int) length);
     }
 
+    @Override
     public long size() {
         try {
             return raf.length();
@@ -183,10 +192,12 @@ public class RAFileRef implements DataRef {
         }
     }
 
+    @Override
     public void retain() {
         rc++;
     }
 
+    @Override
     public void release() {
         rc--;
         if (rc == 0) {
@@ -208,6 +219,7 @@ public class RAFileRef implements DataRef {
         return rc;
     }
 
+    @Override
     public void copyTo(io.netty.buffer.ByteBuf buffer) {
         long length = size();
         if (length > Integer.MAX_VALUE) {
@@ -241,6 +253,7 @@ public class RAFileRef implements DataRef {
         }
     }
 
+    @Override
     public Iterable<DataRef> split(long numberOfChunks, int chunkSize) {
         return new RAFRIterator(chunkSize);
     }
@@ -256,10 +269,12 @@ public class RAFileRef implements DataRef {
             this.length = size();
         }
 
+        @Override
         public boolean hasNext() {
             return length > pos;
         }
 
+        @Override
         public DataRef next() {
             int chunkLength = (int) Math.min((long) chunkSize, length - pos); // the smaller one must be int sized
             PartialFileRef subarea = new PartialFileRef(pos, chunkLength, RAFileRef.this);
@@ -267,8 +282,14 @@ public class RAFileRef implements DataRef {
             return subarea;
         }
 
+        @Override
         public Iterator<DataRef> iterator() {
             return this;
+        }
+        
+        @Override
+        public void remove() {
+            throw new UnsupportedOperationException("Not yet implemented!");
         }
 
     }

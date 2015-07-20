@@ -37,7 +37,7 @@ import org.javatuples.Pair;
  */
 public class TopKMap<K extends Comparable, V> {
 
-    private ArrayList<Pair<K, V>> list = new ArrayList<Pair<K, V>>();
+    private final ArrayList<Pair<K, V>> list = new ArrayList<Pair<K, V>>();
     private final PairFirstComparator<K, V> comp;
     public final int k;
 
