@@ -51,4 +51,9 @@ public class ExponentialMovingAverage {
     public double getMean() {
         return mu;
     }
+    
+    @Override
+    public String toString() {
+        return "ExponentialMovingAverage(µ=" + mu + ")";
+    }
 }
