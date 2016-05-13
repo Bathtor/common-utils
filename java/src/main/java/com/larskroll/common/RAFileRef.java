@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.channels.FileChannel;
 import java.util.Iterator;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  *
@@ -19,7 +20,7 @@ public class RAFileRef implements DataRef {
 
     private final RandomAccessFile raf;
     private final File f;
-    private long rc = 1;
+    private AtomicLong rc = new AtomicLong(1);
     private boolean delete = false;
 
     public RAFileRef(File f, RandomAccessFile raf) {
@@ -194,13 +195,12 @@ public class RAFileRef implements DataRef {
 
     @Override
     public void retain() {
-        rc++;
+        rc.incrementAndGet();
     }
 
     @Override
     public void release() {
-        rc--;
-        if (rc == 0) {
+        if (rc.decrementAndGet() == 0) {
             try {
                 raf.close();
                 if (delete) {
@@ -210,13 +210,13 @@ public class RAFileRef implements DataRef {
                 throw new RuntimeException(ex);
             }
         }
-        if (rc < 0) {
+        if (rc.get() < 0) {
             throw new IllegalStateException("Object was already deallocated: " + raf);
         }
     }
     
     public long rc() { // for debugging only!
-        return rc;
+        return rc.get();
     }
 
     @Override
