@@ -21,7 +21,7 @@ public class ExponentialMovingAverage {
      * @param alpha decay coefficient
      */
     public ExponentialMovingAverage(double alpha) {
-        if (!Double.isFinite(alpha)) {
+        if (Double.isNaN(alpha) || Double.isInfinite(alpha)) {
             throw new RuntimeException("alpha must be a finite value!");
         }
         this.alpha = alpha;
