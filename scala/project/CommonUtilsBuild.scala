@@ -7,7 +7,7 @@ object CsiBuild extends Build {
   EclipseKeys.skipParents in ThisBuild := false
 
   val sprayV = "1.3.3"
-  val akkaV = "2.4.4"
+  val akkaV = "2.3.9"
 
   lazy val commonutils = Project(
     id = "common-utils-scala",
@@ -15,7 +15,7 @@ object CsiBuild extends Build {
     settings = Project.defaultSettings ++ Seq(
       name := "Common Utils Scala",
       organization := "com.larskroll",
-      version := "1.1",
+      version := "1.2",
       scalaVersion := "2.11.8",
       publishMavenStyle := true,
       publishTo := Some(Resolver.sftp("SICS Snapshot Repository", "kompics.i.sics.se", "/home/maven/snapshotrepository")),

@@ -20,8 +20,11 @@
  */
 package com.larskroll.common;
 
+import java.util.Collection;
+
 /**
- * Utility class with workarounds for functionality (maybe from Java8) that is missing
+ * Utility class with workarounds for functionality (maybe from Java8) that is
+ * missing
  * in Java6
  *
  * @author lkroll
@@ -39,8 +42,18 @@ public abstract class J6 {
     public static long roundUp(long num, long divisor) {
         return (num + divisor - 1) / divisor;
     }
-    
+
     public static int roundUp(int num, int divisor) {
-        return (int)roundUp((long)num, (long)divisor);
+        return (int) roundUp((long) num, (long) divisor);
+    }
+
+    public static <T> T randomElement(Collection<T> coll) {
+        int num = (int) (Math.random() * coll.size());
+        for (T t : coll) {
+            if (--num < 0) {
+                return t;
+            }
+        }
+        throw new AssertionError();
     }
 }
