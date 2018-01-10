@@ -5,4 +5,4 @@ This is just a quick collection of things that I see coming up over and over aga
 
 ### Current Versions
 - Java: 1.1
-- Scala: 2.0
+- Scala: 2.0.0

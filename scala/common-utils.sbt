@@ -2,7 +2,7 @@ name := "Common Utils Scala"
 
 organization := "com.larskroll"
 
-version := "2.0"
+version := "2.0.0"
 
 scalaVersion := "2.12.4"
 
