@@ -1,15 +1,34 @@
+.lib/
+dist/*
+resolution-cache/
+streams/
+lib_managed/
+src_managed/
+project/boot/
+project/plugins/project/
+project/target/
+project/project/
 target/
 
-.classpath
+plugin/bin/sbt
+
+# Scala-IDE specific
+.scala_dependencies
+.worksheet
+bin/
 .project
-
-*.class
-*.log
-
-
-# Eclipse specific
 .settings
-.cache
+.classpath
+
+etarget/
+
+# OS X
+
+# Sublime Text
+*.sublime-workspace
+*.sublime-project
+
+.DS_Store
 
 # Other
 # src/main/resources/application.conf
@@ -20,3 +39,4 @@ nb-configuration.xml
 .idea/
 .idea_modules/
 *.iml
+
