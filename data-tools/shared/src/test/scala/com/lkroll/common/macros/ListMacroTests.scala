@@ -31,13 +31,18 @@ class ListMacroTests extends FunSuite with Matchers {
     TestMe.list should contain (1);
     TestMe.list should contain (2);
     TestMe.list should contain (3);
+    TestMe.listO should contain (TestMe.TestO);
   }
 }
 
+sealed trait MyTrait;
 object TestMe {
   val someI = 1;
   val someO = 2;
   val someThing = 3;
 
+  case object TestO extends MyTrait;
+
   val list: List[Int] = Macros.memberList[Int];
+  val listO: List[MyTrait] = Macros.memberList[MyTrait];
 }

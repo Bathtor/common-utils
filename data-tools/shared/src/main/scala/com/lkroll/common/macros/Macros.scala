@@ -55,9 +55,9 @@ object Macros {
       val entries: List[Tree] = enclosingType.members.flatMap {
         case m if ((m != owner) && (!m.isType)) => {
           val t = m.asTerm;
-          //println(s"Member: ${t.fullName}");
           val termInfo = t.info;
-          if (termInfo =:= outputType) {
+          //println(s"Member: ${t.fullName} -> $termInfo");
+          if (termInfo <:< outputType) {
             //println(s"Weapon Member: ${t}");
             val name = t.name;
             Some(q"$name")
