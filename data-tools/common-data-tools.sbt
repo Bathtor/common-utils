@@ -1,13 +1,13 @@
 enablePlugins(ScalaJSPlugin)
-
+import sbtcrossproject.CrossPlugin.autoImport.{crossProject, CrossType}
 //scalacOptions in ThisBuild ++= Seq("-Ymacro-debug-verbose")
 
 resolvers += "Apache" at "http://repo.maven.apache.org/maven2"
 
 lazy val commonSettings = Seq(
   organization := "com.lkroll.common",
-  version := "1.1.0",
-  scalaVersion := "2.12.4",
+  version := "1.2.0",
+  scalaVersion := "2.12.8",
   libraryDependencies ++= Seq(
   	"org.scalatest" %%% "scalatest" % "3.0.4" % "test"),
   bintrayOrganization := Some("lkrollcom"),
@@ -21,8 +21,8 @@ lazy val root = (project in file(".")).settings(
 	skip in publish := true,
 ).aggregate(dataToolsJVM, dataToolsJS)
 
-lazy val dataTools = (crossProject in file(".")).
-   settings(
+lazy val dataTools = (crossProject(JSPlatform, JVMPlatform).crossType(CrossType.Full) in file(".")).
+  settings(
 	  commonSettings,
 	  name := "Common Data Tools",
 	  EclipseKeys.useProjectId := true,
