@@ -2,9 +2,9 @@ name := "Common Utils Scala"
 
 organization := "com.larskroll"
 
-version := "2.0.0"
+version := "2.0.1"
 
-scalaVersion := "2.12.4"
+scalaVersion := "2.12.8"
 
 //crossScalaVersions := Seq("2.11.11", "2.12.4")
 
@@ -29,10 +29,6 @@ lazy val deps =
     val scalalogging	= "com.typesafe.scala-logging" 		%% "scala-logging" 					% "3.7.2"
   }
 
-resolvers += Resolver.mavenLocal
-resolvers += "Kompics Releases" at "http://kompics.sics.se/maven/repository/"
-resolvers += "Kompics Snapshots" at "http://kompics.sics.se/maven/snapshotrepository/"
-
 libraryDependencies ++= Seq(
 	//deps.sprayCan % "provided",
 	//deps.sprayRouting % "provided",
@@ -47,12 +43,7 @@ libraryDependencies ++= Seq(
 
 parallelExecution in Test := false
 
-publishMavenStyle := true
-publishTo := {
-	val kompics = "kompics.i.sics.se"
-	val keyFile = Path.userHome / ".ssh" / "id_rsa"
-	if (version.value.trim.endsWith("SNAPSHOT"))
-		Some(Resolver.sftp("SICS Snapshot Repository", kompics, "/home/maven/snapshotrepository") as("root", keyFile))
-	else
-		Some(Resolver.sftp("SICS Release Repository", kompics, "/home/maven/repository") as("root", keyFile))
-}
+bintrayOrganization := Some("lkrollcom")
+bintrayRepository := "maven"
+licenses += ("MIT", url("http://opensource.org/licenses/MIT"))
+bintrayPackageLabels := Seq("utils")
