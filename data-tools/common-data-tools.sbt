@@ -6,7 +6,7 @@ resolvers += "Apache" at "http://repo.maven.apache.org/maven2"
 
 lazy val commonSettings = Seq(
   organization := "com.lkroll.common",
-  version := "1.2.0",
+  version := "1.3.0",
   scalaVersion := "2.12.8",
   libraryDependencies ++= Seq(
   	"org.scalatest" %%% "scalatest" % "3.0.4" % "test"),
