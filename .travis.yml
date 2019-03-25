@@ -1,0 +1,22 @@
+language: scala
+scala:
+   - 2.12.8
+dist: trusty
+jdk:
+  - oraclejdk8
+  - oraclejdk9
+  - oraclejdk11
+  - openjdk8
+
+script:
+  - "cd scala"
+  - "sbt test"
+  - "cd .."
+  - "cd data-tools"
+  - "sbt test"
+  - "cd .."
+  - "cd java"
+  - "mvn test"
+
+matrix:
+  exclude:
