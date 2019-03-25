@@ -6,9 +6,12 @@ CommonUtils
 This is just a quick collection of things that I see coming up over and over again in my projects.
 
 ### Dependencies
+
+#### Resolvers
 All artifacts are deployed on [Bintray](https://dl.bintray.com/lkrollcom/maven). 
 To the necessary resolvers add the following code to your `pom.xml` or `build.sbt` file.
-- Java:
+
+##### Java
 ```xml
 <repository>
   <snapshots>
@@ -19,14 +22,17 @@ To the necessary resolvers add the following code to your `pom.xml` or `build.sb
   <url>https://dl.bintray.com/lkrollcom/maven</url>
 </repository>
 ```
-- Scala:
+
+##### Scala
 ```scala
 resolvers += Resolver.bintrayRepo("lkrollcom", "maven")
 ```
 
+#### Artefacts
 The individual dependencies with their latest version are the following:
 
-- Java: [ ![Download](https://api.bintray.com/packages/lkrollcom/maven/common-utils/images/download.svg) ](https://bintray.com/lkrollcom/maven/common-utils/_latestVersion)
+##### Java
+[ ![Download](https://api.bintray.com/packages/lkrollcom/maven/common-utils/images/download.svg) ](https://bintray.com/lkrollcom/maven/common-utils/_latestVersion)
 ```xml
 <dependency>
     <groupId>com.larskroll</groupId>
@@ -35,17 +41,21 @@ The individual dependencies with their latest version are the following:
 </dependency>
 ```
 
-- Scala: [ ![Download](https://api.bintray.com/packages/lkrollcom/maven/common-utils-scala/images/download.svg) ](https://bintray.com/lkrollcom/maven/common-utils-scala/_latestVersion)
+##### Scala
+[ ![Download](https://api.bintray.com/packages/lkrollcom/maven/common-utils-scala/images/download.svg) ](https://bintray.com/lkrollcom/maven/common-utils-scala/_latestVersion)
 ```scala
 libraryDependencies += "com.larskroll" %% "common-utils-scala" % "PUT LATEST VERSION HERE"
 ```
 
-- Data Tools: [ ![Download](https://api.bintray.com/packages/lkrollcom/maven/common-data-tools/images/download.svg) ](https://bintray.com/lkrollcom/maven/common-data-tools/_latestVersion)
-JVM-only:
+##### Data Tools
+[ ![Download](https://api.bintray.com/packages/lkrollcom/maven/common-data-tools/images/download.svg) ](https://bintray.com/lkrollcom/maven/common-data-tools/_latestVersion)
+
+- JVM-only:
 ```scala
 libraryDependencies += "com.larskroll" %% "common-data-tools" % "PUT LATEST VERSION HERE"
 ```
-Scala.js or mixed:
+
+- Scala.js or mixed:
 ```scala
 libraryDependencies += "com.larskroll" %%% "common-data-tools" % "PUT LATEST VERSION HERE"
 ```
