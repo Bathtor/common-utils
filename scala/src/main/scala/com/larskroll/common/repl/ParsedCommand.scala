@@ -29,14 +29,15 @@ import util.{Failure, Success, Try}
 
 case class ParseError(f: Parsed.Failure) extends Exception(f.label);
 
-case class ParsedCommand[A](parser: P[A], interpreter: A => Unit, usage: String = "", description: String = "")
+case class ParsedCommand[A](parser: ParsingObject[A],
+                            interpreter: A => Unit,
+                            usage: String = "",
+                            description: String = "")
     extends Command {
   override type Options = A;
 
-  def parserRun[_: P]: P[A] = parser;
-
   override def fit(s: String): Try[Options] = {
-    parse(s, parserRun(_)) match {
+    parse(s, parser.parseOperation(_)) match {
       case Parsed.Success(o, _) => Success(o)
       case f: Parsed.Failure    => Failure(ParseError(f))
     }
@@ -45,9 +46,15 @@ case class ParsedCommand[A](parser: P[A], interpreter: A => Unit, usage: String 
 }
 
 trait ParsedCommands { self: CommandConsole =>
-  def parsed[A](parser: => P[A], usage: String = "", descr: String = "")(interpreter: A => Unit): ParsedCommand[A] = {
+  def parsed[A](parser: ParsingObject[A], usage: String = "", descr: String = "")(
+      interpreter: A => Unit
+  ): ParsedCommand[A] = {
     val cmd = ParsedCommand(parser, interpreter, usage, descr);
     self.commands ::= cmd;
     cmd
   }
+}
+
+trait ParsingObject[A] {
+  def parseOperation[_: P]: P[A];
 }
