@@ -5,7 +5,7 @@ organization := "com.larskroll"
 version := "2.1.0"
 
 scalaVersion := "2.13.1"
-//crossScalaVersions := Seq("2.12.10", "2.13.1") // doesn't work for collections
+crossScalaVersions := Seq("2.12.10", "2.13.1") 
 
 scalacOptions ++= Seq("-deprecation","-feature","-language:implicitConversions")
 
