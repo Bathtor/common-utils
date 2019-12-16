@@ -26,8 +26,8 @@ package com.larskroll.common.repl
 
 import org.jline.reader._;
 import org.jline.terminal.TerminalBuilder;
-import util.{ Try, Success, Failure }
-import org.apache.log4j.{ LogManager, Layout, PatternLayout, WriterAppender };
+import util.{Failure, Success, Try}
+import org.apache.log4j.{Layout, LogManager, PatternLayout, WriterAppender};
 import com.typesafe.scalalogging.Logger
 
 trait Command {
@@ -74,7 +74,8 @@ case class ExactCommand(command: String, interpreter: Unit => Unit, description:
 
 trait CommandConsole extends Runnable {
   val terminal = TerminalBuilder.terminal();
-  val reader = LineReaderBuilder.builder()
+  val reader = LineReaderBuilder
+    .builder()
     .terminal(terminal)
     .build();
   val out = terminal.writer();

@@ -2,11 +2,10 @@ name := "Common Utils Scala"
 
 organization := "com.larskroll"
 
-version := "2.0.1"
+version := "2.1.0"
 
-scalaVersion := "2.12.8"
-
-//crossScalaVersions := Seq("2.11.11", "2.12.4")
+scalaVersion := "2.13.1"
+//crossScalaVersions := Seq("2.12.10", "2.13.1") // doesn't work for collections
 
 scalacOptions ++= Seq("-deprecation","-feature","-language:implicitConversions")
 
@@ -14,19 +13,16 @@ scalacOptions ++= Seq("-deprecation","-feature","-language:implicitConversions")
 
 lazy val deps =
   new {
-    //val sprayV = "1.3.3"
-  	val akkaV = "2.5.8"
+  	val akkaV = "2.6.1"
 
-    //val sprayCan		= "io.spray"						%% "spray-can"						% sprayV
-    //val sprayRouting	= "io.spray"						%% "spray-routing"					% sprayV
-    val akkaActor		= "com.typesafe.akka"				%% "akka-actor"						% akkaV
-    val javaTuples		= "org.javatuples"					%  "javatuples"						% "1.2"
-    val guava			= "com.google.guava"				%  "guava"							% "18.0"
-    val scalatest		= "org.scalatest"					%% "scalatest"						% "3.0.4"
-    val jline           = "org.jline"                  		%  "jline"                          % "3.5.1"
-    val fastparse		= "com.lihaoyi"						%% "fastparse"						% "1.0.0"
-    val log4j			= "log4j"							%  "log4j"							% "1.2.17"
-    val scalalogging	= "com.typesafe.scala-logging" 		%% "scala-logging" 					% "3.7.2"
+    val akkaActor     = "com.typesafe.akka"				    %% "akka-actor"						% akkaV
+    val javaTuples		= "org.javatuples"					    %  "javatuples"						% "1.2"
+    val guava			    = "com.google.guava"				    %  "guava"							  % "27.1-jre"
+    val scalatest		  = "org.scalatest"					      %% "scalatest"						% "3.1.0"
+    val jline         = "org.jline"                   %  "jline"                % "3.13.2"
+    val fastparse		  = "com.lihaoyi"						      %% "fastparse"						% "2.1.3"
+    val log4j			    = "log4j"							          %  "log4j"							  % "1.2.+"
+    val scalalogging	= "com.typesafe.scala-logging" 	%% "scala-logging" 	      % "3.9.+"
   }
 
 libraryDependencies ++= Seq(

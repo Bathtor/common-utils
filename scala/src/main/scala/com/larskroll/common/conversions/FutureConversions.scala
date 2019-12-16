@@ -24,8 +24,8 @@
  */
 package com.larskroll.common.conversions
 
-import java.util.concurrent.{ Future => JFuture }
-import scala.concurrent.{ Future => SFuture }
+import java.util.concurrent.{Future => JFuture}
+import scala.concurrent.{Future => SFuture}
 import scala.concurrent.Promise
 import scala.util.Try
 import com.google.common.util.concurrent._
@@ -34,7 +34,7 @@ object FutureConversions {
   implicit def java2scalaFuture[T](jfuture: JFuture[T]): SFuture[T] = {
     val promise = Promise[T]()
     new Thread(new Runnable {
-      def run() {
+      def run(): Unit = {
         promise.complete(Try { jfuture.get })
       }
     }).start
@@ -43,10 +43,14 @@ object FutureConversions {
   implicit class RichListenableFuture[T](lf: ListenableFuture[T]) {
     def toPromise: SFuture[T] = {
       val p = Promise[T]()
-      Futures.addCallback(lf, new FutureCallback[T] {
-        def onFailure(t: Throwable): Unit = p failure t
-        def onSuccess(result: T): Unit = p success result
-      })
+      Futures.addCallback(
+        lf,
+        new FutureCallback[T] {
+          def onFailure(t: Throwable): Unit = p failure t
+          def onSuccess(result: T): Unit = p success result
+        },
+        java.util.concurrent.Executors.newSingleThreadExecutor()
+      )
       p.future
     }
   }

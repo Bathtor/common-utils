@@ -27,9 +27,9 @@ package com.larskroll.common.collections
 import scala.collection.mutable;
 
 /**
- * An implementation of MultiMap[A,B] with a HashMap as outer collection and HashSet as inner collection.
- */
-@SerialVersionUID(0x587bdc5a2595c9f1L)
+  * An implementation of MultiMap[A,B] with a HashMap as outer collection and HashSet as inner collection.
+  */
+@SerialVersionUID(6375931977208809969L)
 class HashSetMultiMap[A, B] extends MultiMap[A, B] with Serializable {
 
   type InnerCollection = mutable.HashSet[B];
@@ -48,7 +48,7 @@ class HashSetMultiMap[A, B] extends MultiMap[A, B] with Serializable {
     };
     set += kv._2;
   }
-  def putAll(kv: (A, TraversableOnce[B])): Unit = {
+  def putAll(kv: (A, IterableOnce[B])): Unit = {
     val set = inner.get(kv._1) match {
       case Some(set) => set
       case None => {
@@ -77,9 +77,9 @@ class HashSetMultiMap[A, B] extends MultiMap[A, B] with Serializable {
   }
   override def keySet: KeySet = inner.keySet;
 
-  override def mkString(start: String, sep: String, end: String): String = inner.mkString(start, sep, end);
-  override def mkString(sep: String): String = inner.mkString(sep);
-  override def mkString: String = inner.mkString;
+  // override def mkString(start: String, sep: String, end: String): String = inner.mkString(start, sep, end);
+  // override def mkString(sep: String): String = inner.mkString(sep);
+  // override def mkString: String = inner.mkString;
 }
 
 object HashSetMultiMap {

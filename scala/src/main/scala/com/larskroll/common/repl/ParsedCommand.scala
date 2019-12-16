@@ -24,18 +24,19 @@
  */
 package com.larskroll.common.repl
 
-import fastparse.all._
-import util.{ Try, Success, Failure }
+import fastparse._, NoWhitespace._
+import util.{Failure, Success, Try}
 
-case class ParsedCommand[A](
-  parser:      Parser[A],
-  interpreter: A => Unit,
-  usage:       String    = "",
-  description: String    = "") extends Command {
+case class ParseError(f: Parsed.Failure) extends Exception(f.label);
+
+case class ParsedCommand[A](parser: P[A], interpreter: A => Unit, usage: String = "", description: String = "")
+    extends Command {
   override type Options = A;
 
+  def parserRun[_: P]: P[A] = parser;
+
   override def fit(s: String): Try[Options] = {
-    parser.parse(s) match {
+    parse(s, parserRun(_)) match {
       case Parsed.Success(o, _) => Success(o)
       case f: Parsed.Failure    => Failure(ParseError(f))
     }
@@ -44,7 +45,7 @@ case class ParsedCommand[A](
 }
 
 trait ParsedCommands { self: CommandConsole =>
-  def parsed[A](parser: Parser[A], usage: String = "", descr: String = "")(interpreter: A => Unit): ParsedCommand[A] = {
+  def parsed[A](parser: => P[A], usage: String = "", descr: String = "")(interpreter: A => Unit): ParsedCommand[A] = {
     val cmd = ParsedCommand(parser, interpreter, usage, descr);
     self.commands ::= cmd;
     cmd
