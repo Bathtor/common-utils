@@ -1,42 +1,30 @@
-.lib/
-dist/*
-resolution-cache/
-streams/
-lib_managed/
-src_managed/
-project/boot/
-project/plugins/project/
-project/target/
-project/project/
+# Scala
+*.class
+*.log
 target/
 
-plugin/bin/sbt
-
-# Scala-IDE specific
-.scala_dependencies
-.worksheet
-bin/
-.project
-.settings
-.classpath
-
-etarget/
+# SBT
+.cache
+.cache-main
+.history
+.lib/
+dist/
+project/target
+project/project
+metals.sbt
+.metals/
+.bloop/
+.bsp/
 
 # OS X
+
+.DS_Store
 
 # Sublime Text
 *.sublime-workspace
 *.sublime-project
 
-.DS_Store
+# Metals
 
-# Other
-# src/main/resources/application.conf
-.DS_STORE
-nb-configuration.xml
-
-# IDEA
-.idea/
-.idea_modules/
-*.iml
-
+# VSCode
+*.code-workspace

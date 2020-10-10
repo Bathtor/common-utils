@@ -25,6 +25,8 @@
 package com.lkroll.common.result
 
 import org.scalatest._
+import org.scalatest.flatspec._
+import org.scalatest.matchers.should.Matchers
 import org.scalatest.matchers.{ BePropertyMatcher, BePropertyMatchResult }
 
 import scala.util.{ Try, Success, Failure };
@@ -41,7 +43,7 @@ object CustomMatchers {
   val err = new ErrBePropertyMatcher;
 }
 
-class ResultTests extends FlatSpec with Matchers {
+class ResultTests extends AnyFlatSpec with Matchers {
   import CustomMatchers._;
 
   val r1: Result[Int, String] = Ok(-3);

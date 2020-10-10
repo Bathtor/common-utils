@@ -27,9 +27,9 @@ package com.lkroll.common.collections
 import scala.collection.mutable;
 
 /**
- * An implementation of MultiMap[A,B] with a HashMap as outer collection and HashSet as inner collection.
- */
-@SerialVersionUID(0x587bdc5a2595c9f1L)
+  * An implementation of MultiMap[A,B] with a HashMap as outer collection and HashSet as inner collection.
+  */
+@SerialVersionUID(6375931977208809969L)
 class HashSetMultiMap[A, B] extends MultiMap[A, B] with Serializable {
 
   type InnerCollection = mutable.HashSet[B];

@@ -1,8 +1,10 @@
 package com.lkroll.common.collections
 
 import org.scalatest._
+import org.scalatest.flatspec._
+import org.scalatest.matchers.should.Matchers
 
-class MultiMapTest extends FlatSpec with Matchers {
+class MultiMapTest extends AnyFlatSpec with Matchers {
 
   "A TreeSetMultiMap" should "allow multiple values" in {
     val map = TreeSetMultiMap.empty[Int, String];

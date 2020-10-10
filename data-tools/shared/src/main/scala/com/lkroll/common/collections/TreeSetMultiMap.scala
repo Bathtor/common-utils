@@ -27,9 +27,9 @@ package com.lkroll.common.collections
 import scala.collection.mutable;
 
 /**
- * An implementation of MultiMap[A,B] with a TreeMap as outer collection and HashSet as inner collection.
- */
-@SerialVersionUID(0xf1e2e397037e34c7L)
+  * An implementation of MultiMap[A,B] with a TreeMap as outer collection and HashSet as inner collection.
+  */
+@SerialVersionUID(-1017000328094141241L)
 class TreeSetMultiMap[A: Ordering, B] extends MultiMap[A, B] with Serializable {
 
   type InnerCollection = mutable.HashSet[B];

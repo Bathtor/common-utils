@@ -25,8 +25,10 @@
 package com.lkroll.common.data
 
 import org.scalatest._
+import org.scalatest.funsuite._
+import org.scalatest.matchers.should.Matchers
 
-class WordMatchTests extends FunSuite with Matchers {
+class WordMatchTests extends AnyFunSuite with Matchers {
   val w1 = "Word";
   val w2 = "World";
   val w3 = "Nothing";
