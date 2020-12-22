@@ -27,7 +27,8 @@ package com.larskroll.common.conversions
 import org.javatuples._
 
 object TupleConversions {
-  implicit def pair2Tuple[A, B](v: Pair[A, B]) = (v.getValue0, v.getValue1)
-  implicit def triplet2Tuple[A, B, C](v: Triplet[A, B, C]) = (v.getValue0, v.getValue1, v.getValue2)
+  implicit def pair2Tuple[A, B](v: Pair[A, B]): scala.Tuple2[A, B] = (v.getValue0, v.getValue1)
+  implicit def triplet2Tuple[A, B, C](v: Triplet[A, B, C]): scala.Tuple3[A, B, C] =
+    (v.getValue0, v.getValue1, v.getValue2)
 
 }

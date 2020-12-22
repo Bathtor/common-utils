@@ -27,9 +27,9 @@ package com.lkroll.common.collections
 import scala.collection.mutable;
 
 /**
- * An implementation of MultiMap[A,B] with a TreeMap as outer collection and HashSet as inner collection.
- */
-@SerialVersionUID(0xf1e2e397037e34c7L)
+  * An implementation of MultiMap[A,B] with a TreeMap as outer collection and HashSet as inner collection.
+  */
+@SerialVersionUID(-1017000328094141241L)
 class TreeSetMultiMap[A: Ordering, B] extends MultiMap[A, B] with Serializable {
 
   type InnerCollection = mutable.HashSet[B];
@@ -41,7 +41,7 @@ class TreeSetMultiMap[A: Ordering, B] extends MultiMap[A, B] with Serializable {
   override def put(kv: (A, B)): Unit = {
     val set = inner.get(kv._1) match {
       case Some(set) => set
-      case None => {
+      case _ => {
         val set = new mutable.HashSet[B];
         inner += (kv._1 -> set);
         set
@@ -52,7 +52,7 @@ class TreeSetMultiMap[A: Ordering, B] extends MultiMap[A, B] with Serializable {
   def putAll(kv: (A, TraversableOnce[B])): Unit = {
     val set = inner.get(kv._1) match {
       case Some(set) => set
-      case None => {
+      case _ => {
         val set = new mutable.HashSet[B];
         inner += (kv._1 -> set);
         set
@@ -63,7 +63,7 @@ class TreeSetMultiMap[A: Ordering, B] extends MultiMap[A, B] with Serializable {
   override def remove(kv: (A, B)): Boolean = {
     inner.get(kv._1) match {
       case Some(set) => set.remove(kv._2)
-      case None      => false
+      case _         => false
     }
   }
   override def remove(key: A): Option[InnerCollection] = inner.remove(key);
@@ -74,7 +74,7 @@ class TreeSetMultiMap[A: Ordering, B] extends MultiMap[A, B] with Serializable {
   override def contains(key: A): Boolean = inner.contains(key);
   override def entryExists(key: A, p: B => Boolean): Boolean = inner.get(key) match {
     case Some(set) => set.exists(p)
-    case None      => false
+    case _         => false
   }
   override def keySet: KeySet = inner.keySet;
 
@@ -105,9 +105,7 @@ class TreeSetMultiMap[A: Ordering, B] extends MultiMap[A, B] with Serializable {
     }
   }
 
-  override def mkString(start: String, sep: String, end: String): String = inner.mkString(start, sep, end);
-  override def mkString(sep: String): String = inner.mkString(sep);
-  override def mkString: String = inner.mkString;
+  override def prettyString(sep: String): String = inner.mkString(sep);
 }
 
 object TreeSetMultiMap {

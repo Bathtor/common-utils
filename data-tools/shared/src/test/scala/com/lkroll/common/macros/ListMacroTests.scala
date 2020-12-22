@@ -25,13 +25,16 @@
 package com.lkroll.common.macros
 
 import org.scalatest._
+import funsuite._
+import matchers._
 
-class ListMacroTests extends FunSuite with Matchers {
+class ListMacroTests extends AnyFunSuite with should.Matchers {
   test("Member listing should work.") {
-    TestMe.list should contain (1);
-    TestMe.list should contain (2);
-    TestMe.list should contain (3);
-    TestMe.listO should contain (TestMe.TestO);
+    TestMe.list should contain(1);
+    TestMe.list should contain(2);
+    TestMe.list should contain(3);
+    TestMe.listO should contain(TestMe.TestO);
+    //TestMe.myString should ===("Test");
   }
 }
 
@@ -45,4 +48,6 @@ object TestMe {
 
   val list: List[Int] = Macros.memberList[Int];
   val listO: List[MyTrait] = Macros.memberList[MyTrait];
+
+  //val myString: String = Macros.inspect[TestMe.type];
 }

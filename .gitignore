@@ -40,3 +40,9 @@ nb-configuration.xml
 .idea_modules/
 *.iml
 
+# VCode
+
+.bloop/
+.bsp/
+.metals/
+metals.sbt

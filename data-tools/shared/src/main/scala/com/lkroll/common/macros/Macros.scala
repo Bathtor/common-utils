@@ -24,54 +24,91 @@
  */
 package com.lkroll.common.macros
 
-import scala.language.experimental.macros
-import scala.reflect.macros.blackbox.Context;
+import scala.quoted._
+import scala.tasty._
+import scala.tasty.inspector._
 
 object Macros {
+    // inline def inspect[T <: AnyKind]: String = ${ inspectAny[T] }
 
-  class Impl(val c: Context) {
-    def memberList[T: c.WeakTypeTag]: c.Tree = {
-      import c.universe._
+    // def inspectAny[T <: AnyKind](using t: Type[T])(using quotes: Quotes): Expr[String] = {
+    //     import quotes.reflect._
+    //     val pos = rootPosition;
+    //     //val t = summon[Type[T]];
+    //     println(s"type ${Type.show[Type[T]]}");
+    //     println(s"type ${pos}");
+    //     //InspectTasty("", List(t.toString), new Consumer);
+    //     val c = new Consumer;
+    //     //c.inspectTastyFiles(List(t.toString));
+    //     Expr("test")
+    // }
 
-      val outputType = weakTypeTag[T].tpe;
+    // private class Consumer extends TastyInspector {
+    //     // final def apply(reflect: Reflection)(root: reflect.Tree): Unit = {
+    //     //     import reflect._
+    //     //     println(root);
+    //     //     // Do something with the tree
+    //     // }
+    //     override protected def processCompilationUnit(using Quotes)(root: quotes.reflect.Tree): Unit = {
+    //         println(root);
+    //     }
+    // }
 
-      val owner = c.internal.enclosingOwner;
-      //println(s"Owner ${owner.fullName}");
-      val enclosingClass = if (owner.isClass) {
-        //println(s"Owner is class ${owner.asClass}");
-        owner.asClass
-      } else if (owner.owner.isClass) {
-        //println(s"Owner's owner is class ${owner.owner.asClass}");
-        owner.owner.asClass
-      } else {
-        println(s"Oh noes...the owner is weird: ${owner.owner.fullName}");
-        return q"???"
-      };
-      val enclosingType: Type = enclosingClass.asType.toType;
+    inline def memberList[T]: List[T] = ${ memberListImpl[T] };
 
-      //      val entries = ..collect {
-      //        case m => println(s"found a ${c.internal.enclosingOwner.}"); q"null"
-      //      }.toList;
-      val entries: List[Tree] = enclosingType.members.flatMap {
-        case m if ((m != owner) && (!m.isType)) => {
-          val t = m.asTerm;
-          val termInfo = t.info;
-          //println(s"Member: ${t.fullName} -> $termInfo");
-          if (termInfo <:< outputType) {
-            //println(s"Weapon Member: ${t}");
-            val name = t.name;
-            Some(q"$name")
-          } else {
-            None
-          }
-        }
-        case _ => None
-      }.toList;
+    def memberListImpl[T](using Quotes): Expr[List[T]] = '{ Nil }; // TODO reimplement this somehow
 
-      q"List(..$entries)"
-    }
-  }
-
-  def memberList[T]: List[T] = macro Impl.memberList[T];
 
 }
+
+// import scala.language.experimental.macros
+// import scala.reflect.macros.blackbox.Context;
+
+// object Macros {
+
+//   class Impl(val c: Context) {
+//     def memberList[T: c.WeakTypeTag]: c.Tree = {
+//       import c.universe._
+
+//       val outputType = weakTypeTag[T].tpe;
+
+//       val owner = c.internal.enclosingOwner;
+//       //println(s"Owner ${owner.fullName}");
+//       val enclosingClass = if (owner.isClass) {
+//         //println(s"Owner is class ${owner.asClass}");
+//         owner.asClass
+//       } else if (owner.owner.isClass) {
+//         //println(s"Owner's owner is class ${owner.owner.asClass}");
+//         owner.owner.asClass
+//       } else {
+//         println(s"Oh noes...the owner is weird: ${owner.owner.fullName}");
+//         return q"???"
+//       };
+//       val enclosingType: Type = enclosingClass.asType.toType;
+
+//       //      val entries = ..collect {
+//       //        case m => println(s"found a ${c.internal.enclosingOwner.}"); q"null"
+//       //      }.toList;
+//       val entries: List[Tree] = enclosingType.members.flatMap {
+//         case m if ((m != owner) && (!m.isType)) => {
+//           val t = m.asTerm;
+//           val termInfo = t.info;
+//           //println(s"Member: ${t.fullName} -> $termInfo");
+//           if (termInfo <:< outputType) {
+//             //println(s"Weapon Member: ${t}");
+//             val name = t.name;
+//             Some(q"$name")
+//           } else {
+//             None
+//           }
+//         }
+//         case _ => None
+//       }.toList;
+
+//       q"List(..$entries)"
+//     }
+//   }
+
+//   def memberList[T]: List[T] = macro Impl.memberList[T];
+
+// }

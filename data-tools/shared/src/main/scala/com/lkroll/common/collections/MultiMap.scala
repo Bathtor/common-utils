@@ -25,13 +25,13 @@
 package com.lkroll.common.collections
 
 /**
- * An alternative <code>MultiMap</code> trait that uses multi-map semantics for the default map operations.
- *
- * For the standard library version, see [[scala.collection.mutable.MultiMap]].
- *
- * @tparam A key type
- * @tparam B value type (that is the values of the inner collection)
- */
+  * An alternative <code>MultiMap</code> trait that uses multi-map semantics for the default map operations.
+  *
+  * For the standard library version, see [[scala.collection.mutable.MultiMap]].
+  *
+  * @tparam A key type
+  * @tparam B value type (that is the values of the inner collection)
+  */
 trait MultiMap[A, B] extends Iterable[(A, Iterable[B])] {
 
   type InnerCollection <: Iterable[B];
@@ -63,4 +63,6 @@ trait MultiMap[A, B] extends Iterable[(A, Iterable[B])] {
   def contains(key: A): Boolean;
   def entryExists(key: A, p: B => Boolean): Boolean;
   def keySet: KeySet;
+
+  def prettyString(sep: String): String;
 }
