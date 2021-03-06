@@ -72,10 +72,11 @@ class TreeSetMultiMap[A: Ordering, B] extends MultiMap[A, B] with Serializable {
   }
   override def iterator: Iterator[(A, InnerCollection)] = inner.iterator;
   override def contains(key: A): Boolean = inner.contains(key);
-  override def entryExists(key: A, p: B => Boolean): Boolean = inner.get(key) match {
-    case Some(set) => set.exists(p)
-    case None      => false
-  }
+  override def entryExists(key: A, p: B => Boolean): Boolean =
+    inner.get(key) match {
+      case Some(set) => set.exists(p)
+      case None      => false
+    }
   override def keySet: KeySet = inner.keySet;
 
   def firstKey: A = inner.firstKey;
@@ -104,10 +105,6 @@ class TreeSetMultiMap[A: Ordering, B] extends MultiMap[A, B] with Serializable {
       None
     }
   }
-
-  override def mkString(start: String, sep: String, end: String): String = inner.mkString(start, sep, end);
-  override def mkString(sep: String): String = inner.mkString(sep);
-  override def mkString: String = inner.mkString;
 }
 
 object TreeSetMultiMap {

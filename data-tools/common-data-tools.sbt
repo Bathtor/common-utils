@@ -6,10 +6,11 @@ resolvers += "Apache" at "https://repo.maven.apache.org/maven2"
 
 lazy val commonSettings = Seq(
   organization := "com.lkroll.common",
-  version := "1.3.1",
-  scalaVersion := "2.12.11",
+  version := "1.3.2",
+  scalaVersion := "2.13.5",
+  crossScalaVersions := Seq("2.12.13", "2.13.5"),
   libraryDependencies ++= Seq(
-  	"org.scalatest" %%% "scalatest" % "3.2.0" % "test"),
+  	"org.scalatest" %%% "scalatest" % "3.2.5" % "test"),
   bintrayOrganization := Some("lkrollcom"),
   licenses += ("MIT", url("http://opensource.org/licenses/MIT"))
 )

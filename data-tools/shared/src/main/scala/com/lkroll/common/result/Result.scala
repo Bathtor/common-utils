@@ -71,10 +71,11 @@ sealed abstract class Result[+V, +E] extends Product with Serializable {
     *
     * Discards the error value, if any.
     */
-  def ok(): Option[V] = this match {
-    case Ok(v)  => Some(v)
-    case Err(_) => None
-  }
+  def ok(): Option[V] =
+    this match {
+      case Ok(v)  => Some(v)
+      case Err(_) => None
+    }
 
   /**
     * Converts from `Result[V, E]` to `Option[V]`.
@@ -90,10 +91,11 @@ sealed abstract class Result[+V, +E] extends Product with Serializable {
     *
     * Discards the success value, if any.
     */
-  def err(): Option[E] = this match {
-    case Ok(_)  => None
-    case Err(e) => Some(e)
-  }
+  def err(): Option[E] =
+    this match {
+      case Ok(_)  => None
+      case Err(e) => Some(e)
+    }
 
   /**
     * Converts from `Result[V, E]` to `Try[V]`.
@@ -102,11 +104,12 @@ sealed abstract class Result[+V, +E] extends Product with Serializable {
     * then it produces a `Failure[E]`.
     * For other `E` it produces the same output as `Try(this.get)` would.
     */
-  def toTry: Try[V] = this match {
-    case Ok(v)             => Success(v)
-    case Err(e: Throwable) => Failure(e)
-    case Err(e)            => Try(this.get)
-  }
+  def toTry: Try[V] =
+    this match {
+      case Ok(v)             => Success(v)
+      case Err(e: Throwable) => Failure(e)
+      case Err(e)            => Try(this.get)
+    }
 
   /**
     * Maps a `Result[V,E]` to `Result[T,E]`
@@ -115,10 +118,11 @@ sealed abstract class Result[+V, +E] extends Product with Serializable {
     *
     * This function can be used to compose the results of two functions.
     */
-  def map[T](f: V => T): Result[T, E] = this match {
-    case Ok(v)  => Ok(f(v))
-    case Err(e) => Err(e)
-  }
+  def map[T](f: V => T): Result[T, E] =
+    this match {
+      case Ok(v)  => Ok(f(v))
+      case Err(e) => Err(e)
+    }
 
   /**
     * Maps a `Result[V,E]` to `Result[V,F]`
@@ -127,29 +131,32 @@ sealed abstract class Result[+V, +E] extends Product with Serializable {
     *
     * This function can be used to pass through a successful result while handling an error.
     */
-  def mapErr[F](f: E => F): Result[V, F] = this match {
-    case Ok(v)  => Ok(v)
-    case Err(e) => Err(f(e))
-  }
+  def mapErr[F](f: E => F): Result[V, F] =
+    this match {
+      case Ok(v)  => Ok(v)
+      case Err(e) => Err(f(e))
+    }
 
   /**
     * Allows merging of the ok and error values into a type `T`.
     *
     * `T` must be a common super type of both `V` and `E`.
     */
-  def merge[T](implicit ev: V <:< T, ev2: E <:< T): T = this match {
-    case Ok(v)  => v
-    case Err(e) => e
-  }
+  def merge[T](implicit ev: V <:< T, ev2: E <:< T): T =
+    this match {
+      case Ok(v)  => v
+      case Err(e) => e
+    }
 
   /**
     * Returns `res` if the result is [[com.lkroll.common.result.Ok Ok]],
     * otherwise returns the [[com.lkroll.common.result.Err Err]] value of `this`.
     */
-  def and[T, E1 >: E](res: Result[T, E1]): Result[T, E1] = this match {
-    case Ok(_)  => res
-    case Err(_) => this.asInstanceOf[Result[T, E1]]
-  }
+  def and[T, E1 >: E](res: Result[T, E1]): Result[T, E1] =
+    this match {
+      case Ok(_)  => res
+      case Err(_) => this.asInstanceOf[Result[T, E1]]
+    }
 
   /**
     * Returns `res` if the result is [[com.lkroll.common.result.Err Err]],
@@ -160,10 +167,11 @@ sealed abstract class Result[+V, +E] extends Product with Serializable {
     * it is recommended to use [[com.lkroll.common.result.Result#orElse]],
     * which is lazily evaluated.
     */
-  def or[V1 >: V, E1 >: E](res: Result[V1, E1]): Result[V1, E1] = this match {
-    case Ok(_)  => this.asInstanceOf[Result[V1, E1]]
-    case Err(_) => res
-  }
+  def or[V1 >: V, E1 >: E](res: Result[V1, E1]): Result[V1, E1] =
+    this match {
+      case Ok(_)  => this.asInstanceOf[Result[V1, E1]]
+      case Err(_) => res
+    }
 
   /**
     * Calls `op` if the result is [[com.lkroll.common.result.Ok Ok]],
@@ -171,10 +179,11 @@ sealed abstract class Result[+V, +E] extends Product with Serializable {
     *
     * This function can be used for control flow based on `Result` values.
     */
-  def flatMap[T, E1 >: E](op: V => Result[T, E1]): Result[T, E1] = this match {
-    case Ok(v)  => op(v)
-    case Err(_) => this.asInstanceOf[Result[T, E1]]
-  }
+  def flatMap[T, E1 >: E](op: V => Result[T, E1]): Result[T, E1] =
+    this match {
+      case Ok(v)  => op(v)
+      case Err(_) => this.asInstanceOf[Result[T, E1]]
+    }
 
   /**
     * Calls `op` if the result is [[com.lkroll.common.result.Ok Ok]],
@@ -190,19 +199,21 @@ sealed abstract class Result[+V, +E] extends Product with Serializable {
     *
     * This function can be used for control flow based on result values.
     */
-  def orElse[V1 >: V, F](op: E => Result[V1, F]): Result[V1, F] = this match {
-    case Ok(_)  => this.asInstanceOf[Result[V1, F]]
-    case Err(e) => op(e)
-  }
+  def orElse[V1 >: V, F](op: E => Result[V1, F]): Result[V1, F] =
+    this match {
+      case Ok(_)  => this.asInstanceOf[Result[V1, F]]
+      case Err(e) => op(e)
+    }
 
   /**
     * Unwraps a result, yielding the content of an [[com.lkroll.common.result.Ok Ok]].
     * Else, it returns `default`.
     */
-  def getOrElse[V1 >: V](default: => V1): V1 = this match {
-    case Ok(v)  => v
-    case Err(_) => default
-  }
+  def getOrElse[V1 >: V](default: => V1): V1 =
+    this match {
+      case Ok(v)  => v
+      case Err(_) => default
+    }
 
   /**
     * Unwraps a result, yielding the content of an [[com.lkroll.common.result.Ok Ok]].
@@ -210,10 +221,11 @@ sealed abstract class Result[+V, +E] extends Product with Serializable {
     * @throws java.util.NoSuchElementException for [[com.lkroll.common.result.Err Err]]
     * using a standard error message plus the content of the `Err`.
     */
-  def get[V1 >: V]: V1 = this match {
-    case Ok(v)  => v
-    case Err(e) => throw new NoSuchElementException(s"Result.get on Err($e)")
-  }
+  def get[V1 >: V]: V1 =
+    this match {
+      case Ok(v)  => v
+      case Err(e) => throw new NoSuchElementException(s"Result.get on Err($e)")
+    }
 
   /**
     * Unwraps a result, yielding the content of an [[com.lkroll.common.result.Ok Ok]].
@@ -221,19 +233,21 @@ sealed abstract class Result[+V, +E] extends Product with Serializable {
     * @throws java.util.NoSuchElementException for [[com.lkroll.common.result.Err Err]]
     * using the provided error message.
     */
-  def expect[V1 >: V](msg: String): V1 = this match {
-    case Ok(v)  => v
-    case Err(_) => throw new NoSuchElementException(msg)
-  }
+  def expect[V1 >: V](msg: String): V1 =
+    this match {
+      case Ok(v)  => v
+      case Err(_) => throw new NoSuchElementException(msg)
+    }
 
   /**
     * Unwraps a result, yielding the content of an [[com.lkroll.common.result.Err Err]].
     * Else, it returns `default`.
     */
-  def getErrOrElse[E1 >: E](default: => E1): E1 = this match {
-    case Ok(_)  => default
-    case Err(e) => e
-  }
+  def getErrOrElse[E1 >: E](default: => E1): E1 =
+    this match {
+      case Ok(_)  => default
+      case Err(e) => e
+    }
 
   /**
     * Unwraps a result, yielding the content of an [[com.lkroll.common.result.Err Err]].
@@ -241,10 +255,11 @@ sealed abstract class Result[+V, +E] extends Product with Serializable {
     * @throws java.util.NoSuchElementException for [[com.lkroll.common.result.Ok Ok]]
     * using a standard error message plus the content of the `Ok`.
     */
-  def getErr[E1 >: E]: E1 = this match {
-    case Ok(v)  => throw new NoSuchElementException(s"Result.getErr on Ok($v)")
-    case Err(e) => e
-  }
+  def getErr[E1 >: E]: E1 =
+    this match {
+      case Ok(v)  => throw new NoSuchElementException(s"Result.getErr on Ok($v)")
+      case Err(e) => e
+    }
 
   /**
     * Unwraps a result, yielding the content of an [[com.lkroll.common.result.Err Err]].
@@ -252,10 +267,11 @@ sealed abstract class Result[+V, +E] extends Product with Serializable {
     * @throws java.util.NoSuchElementException for [[com.lkroll.common.result.Ok Ok]]
     * using the provided error message.
     */
-  def expectErr[E1 >: E](msg: String): E1 = this match {
-    case Ok(_)  => throw new NoSuchElementException(msg)
-    case Err(e) => e
-  }
+  def expectErr[E1 >: E](msg: String): E1 =
+    this match {
+      case Ok(_)  => throw new NoSuchElementException(msg)
+      case Err(e) => e
+    }
 }
 
 object Result {
@@ -274,10 +290,11 @@ object Result {
     *
     * Maps `Success` to `Ok` and `Failure` to `Err`.
     */
-  def fromTry[V](t: Try[V]): Result[V, Throwable] = t match {
-    case Success(v) => Ok(v)
-    case Failure(e) => Err(e)
-  };
+  def fromTry[V](t: Try[V]): Result[V, Throwable] =
+    t match {
+      case Success(v) => Ok(v)
+      case Failure(e) => Err(e)
+    };
 
   /**
     * Converts an `Option` to a `Result`.
