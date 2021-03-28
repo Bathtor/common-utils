@@ -6,7 +6,7 @@ ThisBuild / organization := "com.lkroll"
 ThisBuild / version := "1.3.3"
 
 ThisBuild / scalaVersion := "2.13.5"
-ThisBuild / crossScalaVersions := Seq("2.11.12", "2.12.13", "2.13.5")
+ThisBuild / crossScalaVersions := Seq("2.12.13", "2.13.5")
 
 ThisBuild / licenses += ("MIT", url("http://opensource.org/licenses/MIT"))
 
@@ -32,7 +32,7 @@ lazy val commonSettings = Seq(
     "-deprecation",
     "-feature",
     "-language:implicitConversions",
-    "-Xfatal-warnings"
+    //"-Xfatal-warnings"
   )
 )
 
