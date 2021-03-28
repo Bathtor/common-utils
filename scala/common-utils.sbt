@@ -23,7 +23,12 @@ sonatypeCredentialHost := "s01.oss.sonatype.org"
 sonatypeRepository := "https://s01.oss.sonatype.org/service/local"
 publishTo := sonatypePublishToBundle.value
 
-scalacOptions ++= Seq("-deprecation","-feature","-language:implicitConversions")
+scalacOptions ++= Seq(
+  "-deprecation",
+  "-feature",
+  "-language:implicitConversions",
+ // "-Xfatal-warnings"
+  )
 
 // DEPENDENCIES
 
