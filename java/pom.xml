@@ -2,10 +2,11 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.lkroll</groupId>
     <artifactId>common-utils</artifactId>
-    <version>1.4.3</version>
+    <version>1.5.0</version>
     <packaging>jar</packaging>
     <name>CommonUtils</name>
-    <!--<url>http://maven.apache.org</url>//-->
+    <description>Reusable utilities for Java projects</description>
+    <url>https://github.com/Bathtor/common-utils</url>
     <properties>
         <java.compiler.version>1.8</java.compiler.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -17,6 +18,11 @@
             <distribution>repo</distribution>
         </license>
     </licenses>
+    <scm>
+        <connection>scm:git:git://github.com/Bathtor/common-utils.git</connection>
+        <developerConnection>scm:git:ssh://github.com:Bathtor/common-utils.git</developerConnection>
+        <url>https://github.com/Bathtor/common-utils/tree/master</url>
+    </scm>
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
@@ -47,7 +53,7 @@
             <plugin>
                 <groupId>org.sonatype.plugins</groupId>
                 <artifactId>nexus-staging-maven-plugin</artifactId>
-                <version>1.6.7</version>
+                <version>1.6.8</version>
                 <extensions>true</extensions>
                 <configuration>
                     <serverId>ossrh</serverId>
@@ -72,7 +78,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>2.2.1</version>
+                <version>3.2.1</version>
                 <executions>
                     <execution>
                         <id>attach-sources</id>
@@ -85,7 +91,10 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.9.1</version>
+                <version>3.2.0</version>
+                <configuration>
+                    <source>${java.compiler.version}</source>
+                </configuration>
                 <executions>
                     <execution>
                         <id>attach-javadocs</id>
@@ -98,7 +107,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-gpg-plugin</artifactId>
-                <version>1.5</version>
+                <version>1.6</version>
                 <executions>
                     <execution>
                         <id>sign-artifacts</id>

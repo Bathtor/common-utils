@@ -16,7 +16,7 @@
 * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-package com.larskroll.common;
+package com.lkroll.common;
 
 import io.netty.buffer.ByteBuf;
 
@@ -41,14 +41,14 @@ public interface DataRef {
     /**
      * Gives the size of the data pointed to.
      * 
-     * @return 
+     * @return the size of the data
      */
     public long size();
     
     /**
      * Extracts the referenced data into a new byte[]
      *
-     * @return
+     * @return the underlying data
      */
     public byte[] dereference();
     
@@ -56,7 +56,7 @@ public interface DataRef {
      * Extracts a single byte from the data
      *
      * @param i position of the byte to extract
-     * @return
+     * @return the byte at position i
      */
     public byte dereference(long i);
     
@@ -65,7 +65,7 @@ public interface DataRef {
      *
      * @param start position of the first byte to extract
      * @param end position of the first byte to exclude
-     * @return 
+     * @return the data between [start, end)
      */
     public byte[] dereference(long start, long end);
     
@@ -94,23 +94,23 @@ public interface DataRef {
     /**
      * Copies the data referenced here into the target starting at offset
      *
-     * @param target
-     * @param offset
+     * @param target target to copy to
+     * @param offset index where copy starts in target
      */
     public void copyTo(DataRef target, long offset);
     
     /**
      * Copies the data referenced here into the target starting at offset
      *
-     * @param target
-     * @param offset
+     * @param target target to copy to
+     * @param offset index where copy starts in target
      */
     public void copyTo(byte[] target, int offset);
     
     /**
      * Move the whole content into the provided ByteBuf
      * 
-     * @param buffer 
+     * @param buffer target buffer
      */
     public void copyTo(ByteBuf buffer);
     
@@ -123,9 +123,9 @@ public interface DataRef {
      * And Don't forget: https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html#size--
      * Java is weird
      * 
-     * @param numberOfChunks
-     * @param chunkSize
-     * @return 
+     * @param numberOfChunks how many chunks to produce
+     * @param chunkSize maximum size of each chunk
+     * @return An iterable over the chunked up data
      */
     public Iterable<DataRef> split(long numberOfChunks, int chunkSize);
 }

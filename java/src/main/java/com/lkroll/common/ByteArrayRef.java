@@ -16,12 +16,13 @@
 * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-package com.larskroll.common;
+package com.lkroll.common;
 
 import io.netty.buffer.ByteBuf;
 import java.util.Iterator;
 
 /**
+ * A DataRef where the underlying storage is a byte[]
  *
  * @author lkroll
  */
@@ -41,6 +42,12 @@ public class ByteArrayRef implements Comparable<ByteArrayRef>, DataRef {
         return new BARIterator(chunkSize);
     }
     
+    /**
+     * Produce a new ref by wrapping the provided bytes
+     *
+     * @param backingArray the underlying data for the new ref
+     * @return A new ref with the given data
+     */
     public static ByteArrayRef wrap(byte[] backingArray) {
         return new ByteArrayRef(0, backingArray.length, backingArray);
     }
@@ -54,17 +61,12 @@ public class ByteArrayRef implements Comparable<ByteArrayRef>, DataRef {
     /**
      * Returns the complete backing array (no copy)
      *
-     * @return
+     * @return the underlying array
      */
     public byte[] getBackingArray() {
         return backingArray;
     }
 
-    /**
-     * Extracts the referenced part of the backing array into a new byte[]
-     *
-     * @return
-     */
     @Override
     public byte[] dereference() {
         if (length == 0) {
@@ -134,12 +136,7 @@ public class ByteArrayRef implements Comparable<ByteArrayRef>, DataRef {
      }
    
      */
-    /**
-     * Copies the data referenced here into the target starting at offset
-     *
-     * @param target
-     * @param offset
-     */
+
     @Override
     public void copyTo(byte[] target, int offset) {
         if (backingArray == null) {

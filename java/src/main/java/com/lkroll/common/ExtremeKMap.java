@@ -16,16 +16,17 @@
 * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-package com.larskroll.common;
+package com.lkroll.common;
 
 import com.google.common.collect.Ordering;
 import java.util.Comparator;
 
 /**
+ * A data structure to calculate TopK and BottomK at the same time
  *
  * @author lkroll
- * @param <K>
- * @param <V>
+ * @param <K> key 
+ * @param <V> value
  */
 public class ExtremeKMap<K extends Comparable, V> {
 

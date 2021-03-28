@@ -16,7 +16,7 @@
 * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-import com.larskroll.common.J6;
+import com.lkroll.common.J6;
 import java.util.Collection;
 import java.util.TreeSet;
 import org.junit.Assert;
@@ -28,8 +28,6 @@ import org.junit.Test;
  */
 public class J6Test {
 
-//    public J6Test() {
-//    }
     @Test
     public void randomCollectionTest() {
         Collection<Integer> cs = new TreeSet<Integer>();
