@@ -32,8 +32,8 @@ case class ParseError(f: Parsed.Failure) extends Exception(f.label);
 case class ParsedCommand[A](parser: ParsingObject[A],
                             interpreter: A => Unit,
                             usage: String = "",
-                            description: String = "")
-    extends Command {
+                            description: String = ""
+) extends Command {
   override type Options = A;
 
   override def fit(s: String): Try[Options] = {

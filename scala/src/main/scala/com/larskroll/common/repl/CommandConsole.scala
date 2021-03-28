@@ -139,8 +139,8 @@ trait CommandConsole extends Runnable {
 
   val helpCommand = exact("help", "Displays this help.") {
     val sorted = commands.filterNot(c => c.usage.isEmpty()).sortBy(c => c.usage);
-    val padTo = sorted.foldLeft(0) {
-      case (acc, c) => Math.max(acc, c.usage.length())
+    val padTo = sorted.foldLeft(0) { case (acc, c) =>
+      Math.max(acc, c.usage.length())
     } + 4;
     val sb = new StringBuilder;
     sb ++= "Available Commands:\n\n";
