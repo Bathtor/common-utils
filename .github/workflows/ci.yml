@@ -1,0 +1,39 @@
+name: CI
+on:
+  pull_request:
+  push:
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - java: 8
+          - java: 11
+          - java: 14
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v1
+    - name: Setup Scala
+      uses: olafurpg/setup-scala@v10
+      with:
+        java-version: "adopt@1.${{ matrix.java }}"
+    # java relies on custom netty jar, so we can't test it here easily
+    - name: Scalafmt Common Utils
+      run: |
+        cd scala
+        sbt -v scalafmtCheckAll
+    - name: Scalafmt Data Tools
+      run: |
+        cd data-tools
+        sbt -v scalafmtCheckAll
+    - name: Build and Test Common Utils
+      run: |
+        cd scala
+        sbt -v -Dfile.encoding=UTF-8 +test
+        sbt publishLocal
+    - name: Build and Test Data Tools
+      run: |
+        cd data-tools
+        sbt -v -Dfile.encoding=UTF-8 +test

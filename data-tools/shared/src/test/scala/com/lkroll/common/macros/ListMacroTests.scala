@@ -30,10 +30,10 @@ import org.scalatest.matchers.should.Matchers
 
 class ListMacroTests extends AnyFunSuite with Matchers {
   test("Member listing should work.") {
-    TestMe.list should contain (1);
-    TestMe.list should contain (2);
-    TestMe.list should contain (3);
-    TestMe.listO should contain (TestMe.TestO);
+    TestMe.list should contain(1);
+    TestMe.list should contain(2);
+    TestMe.list should contain(3);
+    TestMe.listO should contain(TestMe.TestO);
   }
 }
 

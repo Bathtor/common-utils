@@ -1,7 +1,7 @@
 CommonUtils
 ============
 
-[![Build Status](https://travis-ci.com/Bathtor/common-utils.svg?branch=master)](https://travis-ci.com/Bathtor/common-utils)
+[![CI](https://github.com/Bathtor/common-utils/actions/workflows/ci.yml/badge.svg)](https://github.com/Bathtor/common-utils/actions)
 
 This is just a quick collection of things that I see coming up over and over again in my projects.
 
