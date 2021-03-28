@@ -26,8 +26,7 @@ package com.lkroll.common.result
 
 import scala.util.{Failure, Success, Try}
 
-/**
-  * A [[https://doc.rust-lang.org/std/result/index.html Rust-style]] `Result` type for error handling.
+/** A [[https://doc.rust-lang.org/std/result/index.html Rust-style]] `Result` type for error handling.
   *
   * It works essentially like Scala's `Either`, just with sensible naming,
   * and the "success" type argument coming first, as one would expect.
@@ -56,18 +55,15 @@ import scala.util.{Failure, Success, Try}
   */
 sealed abstract class Result[+V, +E] extends Product with Serializable {
 
-  /**
-    * Checks whether or not this is an instance of [[com.lkroll.common.result.Ok Ok]].
+  /** Checks whether or not this is an instance of [[com.lkroll.common.result.Ok Ok]].
     */
   def isOk: Boolean;
 
-  /**
-    * Checks whether or not this is an instance of [[com.lkroll.common.result.Err Err]].
+  /** Checks whether or not this is an instance of [[com.lkroll.common.result.Err Err]].
     */
   def isErr: Boolean;
 
-  /**
-    * Converts from `Result[V, E]` to `Option[V]`.
+  /** Converts from `Result[V, E]` to `Option[V]`.
     *
     * Discards the error value, if any.
     */
@@ -77,8 +73,7 @@ sealed abstract class Result[+V, +E] extends Product with Serializable {
       case Err(_) => None
     }
 
-  /**
-    * Converts from `Result[V, E]` to `Option[V]`.
+  /** Converts from `Result[V, E]` to `Option[V]`.
     *
     * Discards the error value, if any.
     *
@@ -86,8 +81,7 @@ sealed abstract class Result[+V, +E] extends Product with Serializable {
     */
   def toOption: Option[V] = ok();
 
-  /**
-    * Converts from `Result[V, E]` to `Option[E].
+  /** Converts from `Result[V, E]` to `Option[E].
     *
     * Discards the success value, if any.
     */
@@ -97,8 +91,7 @@ sealed abstract class Result[+V, +E] extends Product with Serializable {
       case Err(e) => Some(e)
     }
 
-  /**
-    * Converts from `Result[V, E]` to `Try[V]`.
+  /** Converts from `Result[V, E]` to `Try[V]`.
     *
     * If `E <: Throwable` and `this` is [[com.lkroll.common.result.Err Err]]
     * then it produces a `Failure[E]`.
@@ -111,8 +104,7 @@ sealed abstract class Result[+V, +E] extends Product with Serializable {
       case Err(e)            => Try(this.get)
     }
 
-  /**
-    * Maps a `Result[V,E]` to `Result[T,E]`
+  /** Maps a `Result[V,E]` to `Result[T,E]`
     * by applying a function to a contained [[com.lkroll.common.result.Ok Ok]] value,
     * leaving an [[com.lkroll.common.result.Err Err]] value untouched.
     *
@@ -124,8 +116,7 @@ sealed abstract class Result[+V, +E] extends Product with Serializable {
       case Err(e) => Err(e)
     }
 
-  /**
-    * Maps a `Result[V,E]` to `Result[V,F]`
+  /** Maps a `Result[V,E]` to `Result[V,F]`
     * by applying a function to a contained [[com.lkroll.common.result.Err Err]] value,
     * leaving an [[com.lkroll.common.result.Ok Ok]] value untouched.
     *
@@ -137,8 +128,7 @@ sealed abstract class Result[+V, +E] extends Product with Serializable {
       case Err(e) => Err(f(e))
     }
 
-  /**
-    * Allows merging of the ok and error values into a type `T`.
+  /** Allows merging of the ok and error values into a type `T`.
     *
     * `T` must be a common super type of both `V` and `E`.
     */
@@ -148,8 +138,7 @@ sealed abstract class Result[+V, +E] extends Product with Serializable {
       case Err(e) => e
     }
 
-  /**
-    * Returns `res` if the result is [[com.lkroll.common.result.Ok Ok]],
+  /** Returns `res` if the result is [[com.lkroll.common.result.Ok Ok]],
     * otherwise returns the [[com.lkroll.common.result.Err Err]] value of `this`.
     */
   def and[T, E1 >: E](res: Result[T, E1]): Result[T, E1] =
@@ -158,8 +147,7 @@ sealed abstract class Result[+V, +E] extends Product with Serializable {
       case Err(_) => this.asInstanceOf[Result[T, E1]]
     }
 
-  /**
-    * Returns `res` if the result is [[com.lkroll.common.result.Err Err]],
+  /** Returns `res` if the result is [[com.lkroll.common.result.Err Err]],
     * otherwise returns the [[com.lkroll.common.result.Ok Ok]] value of `this`.
     *
     * Arguments passed to or are eagerly evaluated;
@@ -173,8 +161,7 @@ sealed abstract class Result[+V, +E] extends Product with Serializable {
       case Err(_) => res
     }
 
-  /**
-    * Calls `op` if the result is [[com.lkroll.common.result.Ok Ok]],
+  /** Calls `op` if the result is [[com.lkroll.common.result.Ok Ok]],
     * otherwise returns the [[com.lkroll.common.result.Err Err]] value of `this`.
     *
     * This function can be used for control flow based on `Result` values.
@@ -185,16 +172,14 @@ sealed abstract class Result[+V, +E] extends Product with Serializable {
       case Err(_) => this.asInstanceOf[Result[T, E1]]
     }
 
-  /**
-    * Calls `op` if the result is [[com.lkroll.common.result.Ok Ok]],
+  /** Calls `op` if the result is [[com.lkroll.common.result.Ok Ok]],
     * otherwise returns the [[com.lkroll.common.result.Err Err]] value of `this`.
     *
     * Alias of [[com.lkroll.common.result.Result#flatMap]].
     */
   def andThen[T, E1 >: E](op: V => Result[T, E1]): Result[T, E1] = flatMap(op);
 
-  /**
-    * Calls `op` if the result is [[com.lkroll.common.result.Err Err]],
+  /** Calls `op` if the result is [[com.lkroll.common.result.Err Err]],
     * otherwise returns the [[com.lkroll.common.result.Ok Ok]] value of `this`.
     *
     * This function can be used for control flow based on result values.
@@ -205,8 +190,7 @@ sealed abstract class Result[+V, +E] extends Product with Serializable {
       case Err(e) => op(e)
     }
 
-  /**
-    * Unwraps a result, yielding the content of an [[com.lkroll.common.result.Ok Ok]].
+  /** Unwraps a result, yielding the content of an [[com.lkroll.common.result.Ok Ok]].
     * Else, it returns `default`.
     */
   def getOrElse[V1 >: V](default: => V1): V1 =
@@ -215,8 +199,7 @@ sealed abstract class Result[+V, +E] extends Product with Serializable {
       case Err(_) => default
     }
 
-  /**
-    * Unwraps a result, yielding the content of an [[com.lkroll.common.result.Ok Ok]].
+  /** Unwraps a result, yielding the content of an [[com.lkroll.common.result.Ok Ok]].
     *
     * @throws java.util.NoSuchElementException for [[com.lkroll.common.result.Err Err]]
     * using a standard error message plus the content of the `Err`.
@@ -227,8 +210,7 @@ sealed abstract class Result[+V, +E] extends Product with Serializable {
       case Err(e) => throw new NoSuchElementException(s"Result.get on Err($e)")
     }
 
-  /**
-    * Unwraps a result, yielding the content of an [[com.lkroll.common.result.Ok Ok]].
+  /** Unwraps a result, yielding the content of an [[com.lkroll.common.result.Ok Ok]].
     *
     * @throws java.util.NoSuchElementException for [[com.lkroll.common.result.Err Err]]
     * using the provided error message.
@@ -239,8 +221,7 @@ sealed abstract class Result[+V, +E] extends Product with Serializable {
       case Err(_) => throw new NoSuchElementException(msg)
     }
 
-  /**
-    * Unwraps a result, yielding the content of an [[com.lkroll.common.result.Err Err]].
+  /** Unwraps a result, yielding the content of an [[com.lkroll.common.result.Err Err]].
     * Else, it returns `default`.
     */
   def getErrOrElse[E1 >: E](default: => E1): E1 =
@@ -249,8 +230,7 @@ sealed abstract class Result[+V, +E] extends Product with Serializable {
       case Err(e) => e
     }
 
-  /**
-    * Unwraps a result, yielding the content of an [[com.lkroll.common.result.Err Err]].
+  /** Unwraps a result, yielding the content of an [[com.lkroll.common.result.Err Err]].
     *
     * @throws java.util.NoSuchElementException for [[com.lkroll.common.result.Ok Ok]]
     * using a standard error message plus the content of the `Ok`.
@@ -261,8 +241,7 @@ sealed abstract class Result[+V, +E] extends Product with Serializable {
       case Err(e) => e
     }
 
-  /**
-    * Unwraps a result, yielding the content of an [[com.lkroll.common.result.Err Err]].
+  /** Unwraps a result, yielding the content of an [[com.lkroll.common.result.Err Err]].
     *
     * @throws java.util.NoSuchElementException for [[com.lkroll.common.result.Ok Ok]]
     * using the provided error message.
@@ -276,8 +255,7 @@ sealed abstract class Result[+V, +E] extends Product with Serializable {
 
 object Result {
 
-  /**
-    * Attempts to evaluate `f` and wrap the result in a `Result`.
+  /** Attempts to evaluate `f` and wrap the result in a `Result`.
     *
     * If the evaluation is successful with result `v`, returns `Ok(v)`.
     *
@@ -285,8 +263,7 @@ object Result {
     */
   def apply[V](f: => V): Result[V, Throwable] = fromTry(Try(f))
 
-  /**
-    * Converts an `Try` to a `Result`.
+  /** Converts an `Try` to a `Result`.
     *
     * Maps `Success` to `Ok` and `Failure` to `Err`.
     */
@@ -296,8 +273,7 @@ object Result {
       case Failure(e) => Err(e)
     };
 
-  /**
-    * Converts an `Option` to a `Result`.
+  /** Converts an `Option` to a `Result`.
     *
     * If `o` is `Some(v)`, returns `Ok(v)`.
     *

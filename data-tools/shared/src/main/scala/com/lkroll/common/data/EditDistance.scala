@@ -27,8 +27,8 @@ package com.lkroll.common.data
 object EditDistance {
   def editDist[A](a: Iterable[A], b: Iterable[A]) =
     a.foldLeft((0 to b.size).toList)((prev, x) => {
-      (prev zip prev.tail zip b).scanLeft(prev.head + 1) {
-        case (h, ((d, v), y)) => Math.min(Math.min(h + 1, v + 1), d + (if (x == y) 0 else 1))
+      (prev zip prev.tail zip b).scanLeft(prev.head + 1) { case (h, ((d, v), y)) =>
+        Math.min(Math.min(h + 1, v + 1), d + (if (x == y) 0 else 1))
       }
     }).last
 }

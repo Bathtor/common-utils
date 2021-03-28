@@ -39,7 +39,7 @@ lazy val commonSettings = Seq(
 lazy val root = (project in file(".")).settings(
 	commonSettings,
 	name := "Common Data Tools Root",
-	publis / skip := true,
+	publish / skip := true,
 ).aggregate(dataToolsJVM, dataToolsJS)
 
 lazy val dataTools = (crossProject(JSPlatform, JVMPlatform).crossType(CrossType.Full) in file(".")).
