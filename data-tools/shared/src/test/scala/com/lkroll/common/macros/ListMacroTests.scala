@@ -25,8 +25,10 @@
 package com.lkroll.common.macros
 
 import org.scalatest._
+import org.scalatest.funsuite._
+import org.scalatest.matchers.should.Matchers
 
-class ListMacroTests extends FunSuite with Matchers {
+class ListMacroTests extends AnyFunSuite with Matchers {
   test("Member listing should work.") {
     TestMe.list should contain (1);
     TestMe.list should contain (2);
